@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
+[ExecuteInEditMode] //moving cube in editor mode will show console responses
+[SelectionBase] //the first click will select the parent object
 
-public class EditorSnap : MonoBehaviour
+public class CubeEditor : MonoBehaviour
 {
 
     [SerializeField] [Range(1f,20f)] float gridSize = 10f;
+
+    TextMesh textMesh;
 
     void Update()
     {
@@ -17,5 +20,8 @@ public class EditorSnap : MonoBehaviour
 
         transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
         Debug.Log("Editor causes this Update");
+
+        textMesh = GetComponentInChildren<TextMesh>(); //grabs textmesh from cube top
+        textMesh.text = snapPos.x +","+snapPos.z;
     }
 }
