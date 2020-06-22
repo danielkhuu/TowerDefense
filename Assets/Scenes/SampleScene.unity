@@ -1335,6 +1335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1928651776}
+  - component: {fileID: 1928651777}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -1367,6 +1368,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1928651777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928651775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c05bc9a0eacc0f4cb31bc5667db318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWaypoint: {fileID: 1731419612}
+  endWaypoint: {fileID: 1931223591}
+--- !u!114 &1931223591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8256354235978301403, guid: ab2b9440a9e6d0f45842d6bd61565714,
+    type: 3}
+  m_PrefabInstance: {fileID: 1228768640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957de783917d52e45b1fc9e76cf16527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1948326379
 PrefabInstance:
   m_ObjectHideFlags: 0
