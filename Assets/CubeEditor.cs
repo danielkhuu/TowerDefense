@@ -2,40 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode] //basically makes this script a tool for us to make the map 
-[SelectionBase] //the first click will select the parent object
-[RequireComponent(typeof(Waypoint))] 
-
+[ExecuteInEditMode]
+[SelectionBase]
+[RequireComponent(typeof(Waypoint))]
 public class CubeEditor : MonoBehaviour
 {
+
     Waypoint waypoint;
 
     private void Awake()
     {
         waypoint = GetComponent<Waypoint>();
     }
+
     void Update()
     {
         SnapToGrid();
         UpdateLabel();
     }
 
-    void SnapToGrid()
+    private void SnapToGrid()
     {
         int gridSize = waypoint.GetGridSize();
         transform.position = new Vector3(
-            waypoint.GetGridPos().x,
+            waypoint.GetGridPos().x * gridSize,
             0f,
-            waypoint.GetGridPos().y   //not z because of the movement
-            );
+            waypoint.GetGridPos().y * gridSize
+        );
     }
-    void UpdateLabel()
+
+    private void UpdateLabel()
     {
-        TextMesh textMesh = GetComponentInChildren<TextMesh>(); //grabs textmesh from cube top
+        TextMesh textMesh = GetComponentInChildren<TextMesh>();
         int gridSize = waypoint.GetGridSize();
-        string labelText = 
-            waypoint.GetGridPos().x / gridSize + "," + waypoint.GetGridPos().y / gridSize;
+        string labelText =
+            waypoint.GetGridPos().x +
+            "," +
+            waypoint.GetGridPos().y;
         textMesh.text = labelText;
-        gameObject.name = "Cube " + labelText;
+        gameObject.name = labelText;
     }
 }
