@@ -5,8 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 [SelectionBase]
 [RequireComponent(typeof(Waypoint))]
-public class CubeEditor : MonoBehaviour
-{
+public class CubeEditor : MonoBehaviour {
 
     Waypoint waypoint;
 
@@ -35,9 +34,9 @@ public class CubeEditor : MonoBehaviour
     {
         TextMesh textMesh = GetComponentInChildren<TextMesh>();
         int gridSize = waypoint.GetGridSize();
-        string labelText =
+        string labelText = 
             waypoint.GetGridPos().x +
-            "," +
+            "," + 
             waypoint.GetGridPos().y;
         textMesh.text = labelText;
         gameObject.name = labelText;
