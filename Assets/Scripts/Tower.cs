@@ -6,13 +6,38 @@ public class Tower : MonoBehaviour
 {
     [SerializeField] Transform objectToPan;
     [SerializeField] Transform targetEnemy;
+    [SerializeField] float attackRange = 10f;
+    [SerializeField] ParticleSystem projectileParticle;
 
     void Update()
     {
-        LookAtEnemy();
+        if (targetEnemy) //if a target exists, look at enemy and begin firing process
+        {
+            objectToPan.LookAt(targetEnemy);
+            FireAtEnemy();
+        }
+        else //if no enemy, stop shooting
+        {
+            Shoot(false);
+        }
+
     }
-    private void LookAtEnemy()
-    {
-        objectToPan.LookAt(targetEnemy);
+
+    private void FireAtEnemy()
+    {                                           //enemy position,         tower position
+        float distanceToEnemy = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
+        if(distanceToEnemy <= attackRange) 
+        {
+            Shoot(true); //shoot if within range
+        }
+        else
+        {
+            Shoot(false); //dont shoot
+        }
+    }
+    private void Shoot(bool isActive)
+    {                           //emission tab of tower's particle system in inspector
+        var emissionModule = projectileParticle.emission;
+        emissionModule.enabled = isActive; //turn on emission
     }
 }

@@ -13,12 +13,18 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        print("Im hit");
         ProcessHit();
     }
     private void ProcessHit()
     {
         hitPoints--;
-        print("Current hitpoints " + hitPoints);
+        if (hitPoints <= 0)
+        {
+            KillEnemy();
+        }
+    }
+    private void KillEnemy()
+    {
+        Destroy(gameObject); //destroy enemy ship
     }
 }

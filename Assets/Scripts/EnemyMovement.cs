@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
-        var path = pathfinder.GetPath();
+        var path = pathfinder.GetPath(); //get the path list from pathfinder cs
         StartCoroutine(FollowPath(path)); //look up what this does again
 	}
 
@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour {
         {
             transform.position = waypoint.transform.position;
             print("Visiting: " + waypoint);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(.8f);
         }
         print("Ending patrol");
     }
