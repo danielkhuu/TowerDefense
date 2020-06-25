@@ -8,7 +8,7 @@ public class Waypoint : MonoBehaviour
     public bool isExplored = false;
     public Waypoint exploredFrom; //keeps track of what current node came from
     public bool isPlaceable = true;
-    [SerializeField] Tower towerToSpawn;
+    
 
     Vector2Int gridPos;
 
@@ -33,8 +33,7 @@ public class Waypoint : MonoBehaviour
         {
             if (isPlaceable)
             {
-                Instantiate(towerToSpawn, transform.position, Quaternion.identity);
-                isPlaceable = false; //so we cant place duplicate towers
+                FindObjectOfType<TowerFactory>().AddTower(this);
             }
             else
             {
