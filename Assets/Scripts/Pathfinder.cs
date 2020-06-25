@@ -127,7 +127,5 @@ public class Pathfinder : MonoBehaviour {
                 grid.Add(gridPos, waypoint);
             }
         }
-
-
     }
 }

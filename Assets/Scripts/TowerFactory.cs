@@ -4,27 +4,51 @@ using UnityEngine;
 
 public class TowerFactory : MonoBehaviour
 {
+
     [SerializeField] int towerLimit = 5;
     [SerializeField] Tower towerPrefab;
+    [SerializeField] Transform towerParentTransform;
 
-    int numTowers = 0;
+    Queue<Tower> towerQueue = new Queue<Tower>();
 
     public void AddTower(Waypoint baseWaypoint)
     {
-        if(numTowers < towerLimit)
+        int numTowers = towerQueue.Count;
+
+        if (numTowers < towerLimit)
         {
             InstantiateNewTower(baseWaypoint);
         }
         else
         {
-            print("Max towers reached");
+            MoveExistingTower(baseWaypoint);
         }
-
     }
-    private void InstantiateNewTower(Waypoint baseWaypoint) 
+
+    private void InstantiateNewTower(Waypoint baseWaypoint)
     {
-        Instantiate(towerPrefab, baseWaypoint.transform.position, Quaternion.identity);
-        baseWaypoint.isPlaceable = false; //so we cant place duplicate towers
-        numTowers++;
+        var newTower = Instantiate(towerPrefab, baseWaypoint.transform.position, Quaternion.identity);
+        newTower.transform.parent = towerParentTransform; //like in RS, this is where spawned towers go in hierarchy
+        newTower.transform.parent = towerParentTransform;
+        baseWaypoint.isPlaceable = false;
+
+        newTower.baseWaypoint = baseWaypoint;
+        baseWaypoint.isPlaceable = false;
+
+        towerQueue.Enqueue(newTower);
+    }
+
+    private void MoveExistingTower(Waypoint newBaseWaypoint)
+    {
+        var oldTower = towerQueue.Dequeue();
+
+        oldTower.baseWaypoint.isPlaceable = true; // free-up the block
+        newBaseWaypoint.isPlaceable = false;
+
+        oldTower.baseWaypoint = newBaseWaypoint;
+
+        oldTower.transform.position = newBaseWaypoint.transform.position;
+
+        towerQueue.Enqueue(oldTower);
     }
 }

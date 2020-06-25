@@ -1,69 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+
+    // Paramaters of each tower
     [SerializeField] Transform objectToPan;
     [SerializeField] float attackRange = 10f;
     [SerializeField] ParticleSystem projectileParticle;
 
-    //Tower State
+    public Waypoint baseWaypoint; // what the tower is standing on
+
+    // State of each tower
     Transform targetEnemy;
 
+    // Update is called once per frame
     void Update()
     {
         SetTargetEnemy();
-        if (targetEnemy) //if a target exists, look at enemy and begin firing process
+        if (targetEnemy)
         {
             objectToPan.LookAt(targetEnemy);
             FireAtEnemy();
         }
-        else //if no enemy, stop shooting
+        else
         {
             Shoot(false);
         }
-
     }
+
     private void SetTargetEnemy()
     {
-        var sceneEnemies = FindObjectsOfType<EnemyDamage>(); //any object with that cs is a damagable enemy
-        if(sceneEnemies.Length ==0) { return; }
+        var sceneEnemies = FindObjectsOfType<EnemyDamage>();
+        if (sceneEnemies.Length == 0) { return; }
 
-        Transform closestEnemy = sceneEnemies[0].transform; //defaults 1sts sceneEnemies as closest
+        Transform closestEnemy = sceneEnemies[0].transform;
 
         foreach (EnemyDamage testEnemy in sceneEnemies)
         {
-            closestEnemy = GetClosest(closestEnemy, testEnemy.transform); //comparing closetEnemy and next 
+            closestEnemy = GetClosest(closestEnemy, testEnemy.transform);
         }
-        targetEnemy = closestEnemy; 
+
+        targetEnemy = closestEnemy;
     }
+
     private Transform GetClosest(Transform transformA, Transform transformB)
     {
-        var distToA = Vector3.Distance(transformA.position, transform.position);
-        var distToB= Vector3.Distance(transformB.position, transform.position);
-        if(distToA < distToB)
+        var distToA = Vector3.Distance(transform.position, transformA.position);
+        var distToB = Vector3.Distance(transform.position, transformB.position);
+
+        if (distToA < distToB)
         {
             return transformA;
         }
+
         return transformB;
     }
 
     private void FireAtEnemy()
-    {                                           //enemy position,         tower position
-        float distanceToEnemy = Vector3.Distance(targetEnemy.transform.position, transform.position);
-        if(distanceToEnemy <= attackRange) 
+    {
+        float distanceToEnemy = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
+        if (distanceToEnemy <= attackRange)
         {
-            Shoot(true); //shoot if within range
+            Shoot(true);
         }
         else
         {
-            Shoot(false); //dont shoot
+            Shoot(false);
         }
     }
+
     private void Shoot(bool isActive)
-    {                           //emission tab of tower's particle system in inspector
+    {
         var emissionModule = projectileParticle.emission;
-        emissionModule.enabled = isActive; //turn on emission
+        emissionModule.enabled = isActive;
     }
 }

@@ -4,22 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
+    [SerializeField] float speed = 10f;
 
-    [SerializeField] List<Waypoint> path; //todo remove
-	// Use this for initialization
-	void Start () {
-        Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
-        path = pathfinder.GetPath(); //get the path list from pathfinder cs
-        StartCoroutine(FollowPath(path)); //look up what this does again
-	}
+    List<Waypoint> path;
+    int waypointCounter = 0;
 
-    IEnumerator FollowPath(List<Waypoint> path)
+    void Start()
     {
-        foreach (Waypoint waypoint in path)
+        path = FindObjectOfType<Pathfinder>().GetPath();
+    }
+
+    private void Update()
+    {
+        MoveToWaypoint(path[waypointCounter]);
+    }
+
+    private void MoveToWaypoint(Waypoint waypoint)
+    {
+        Vector3 groundPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 direction = (waypoint.transform.position - groundPos).normalized;
+
+        float distanceThisFrame = speed * Time.deltaTime;
+
+        if (distanceThisFrame >= Vector3.Distance(waypoint.transform.position, groundPos))
         {
-            transform.position = waypoint.transform.position;
-   //         print("Visiting: " + waypoint); 
-            yield return new WaitForSeconds(.8f);
+            waypointCounter++;
+            return;
         }
+
+        transform.Translate(direction * distanceThisFrame, Space.World);
     }
 }

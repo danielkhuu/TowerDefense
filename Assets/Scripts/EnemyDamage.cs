@@ -32,6 +32,8 @@ public class EnemyDamage : MonoBehaviour
         //important to instantiate before destroying
         var vfx = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
         vfx.Play();
+
+        Destroy(vfx.gameObject, vfx.main.duration);
         Destroy(gameObject); //destroy enemy ship
     }
 }
