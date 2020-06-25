@@ -8,11 +8,6 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField] ParticleSystem hitParticlePrefab;
     [SerializeField] ParticleSystem deathParticlePrefab;
 
-    void Start()
-    {
-        
-    }
-
     private void OnParticleCollision(GameObject other)
     {
         ProcessHit();

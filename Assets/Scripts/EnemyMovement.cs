@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
     [SerializeField] float speed = 10f;
+    [SerializeField] ParticleSystem goalParticlePrefab;
 
     List<Waypoint> path;
     int waypointCounter = 0;
@@ -33,5 +34,18 @@ public class EnemyMovement : MonoBehaviour {
         }
 
         transform.Translate(direction * distanceThisFrame, Space.World);
+        if(waypointCounter == path.Count-1)
+        {
+            SelfDestruct();
+        }
+
+    }
+    private void SelfDestruct()
+    {
+        var vfx = Instantiate(goalParticlePrefab, transform.position, Quaternion.identity);
+        vfx.Play();
+
+        Destroy(vfx.gameObject, vfx.main.duration);
+        Destroy(gameObject); //destroy enemy ship
     }
 }
