@@ -93,15 +93,22 @@ public class Pathfinder : MonoBehaviour {
          * (3) Add start waypoint
          * (4) Reverse list */
 
-        path.Add(endWaypoint); // (1)
-        Waypoint previous = endWaypoint.exploredFrom; // (2)
-        while (previous != startWaypoint) 
+        SetAsPath(endWaypoint);
+
+        Waypoint previous = endWaypoint.exploredFrom;
+        while (previous != startWaypoint)
         {
-            path.Add(previous); 
-            previous = previous.exploredFrom;  //set current node's previous to its exploredFrom node
+            previous = previous.exploredFrom;
+            SetAsPath(previous);
         }
-        path.Add(startWaypoint); // (3)
+
+        SetAsPath(startWaypoint);
         path.Reverse();
+    }
+    private void SetAsPath(Waypoint waypoint)
+    {
+        path.Add(waypoint);
+        waypoint.isPlaceable = false;
     }
 
     private void LoadBlocks()

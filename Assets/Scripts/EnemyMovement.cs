@@ -15,13 +15,11 @@ public class EnemyMovement : MonoBehaviour {
 
     IEnumerator FollowPath(List<Waypoint> path)
     {
-        print("Starting patrol..."); 
         foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position;
-            print("Visiting: " + waypoint);
+   //         print("Visiting: " + waypoint); 
             yield return new WaitForSeconds(.8f);
         }
-        print("Ending patrol");
     }
 }
