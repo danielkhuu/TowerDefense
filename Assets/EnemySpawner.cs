@@ -5,18 +5,21 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     // Start is called before the first frame update
+
     [SerializeField] EnemyMovement enemyToSpawn;
-    [SerializeField] float spawnDelay = 2f;
+    [Range(0.1f, 10f)] [SerializeField] float spawnDelay = 2f;
 
     void Start()
     {
-
+        StartCoroutine(RepeatedlySpawnEnemies());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator RepeatedlySpawnEnemies()
     {
-        
+        while(true) //while forever
+        {                                                   //no additional rotation
+            Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(spawnDelay);
+        }
     }
-
 }
