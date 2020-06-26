@@ -9,7 +9,6 @@ public class Waypoint : MonoBehaviour
     public Waypoint exploredFrom; //keeps track of what current node came from
     public bool isPlaceable = true;
     
-
     Vector2Int gridPos;
 
     const int gridSize = 10;
@@ -28,16 +27,12 @@ public class Waypoint : MonoBehaviour
     }
 
     void OnMouseOver()
-    {
+    {       
         if (Input.GetMouseButtonDown(0)) // left click
         {
             if (isPlaceable)
             {
-                FindObjectOfType<TowerFactory>().AddTower(this);
-            }
-            else
-            {
-                print("Can't place here");
+                FindObjectOfType<TowerFactory>().AddTower(this); 
             }
         }
     }
