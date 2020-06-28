@@ -14,21 +14,37 @@ public class EnemySpawner : MonoBehaviour
 
     int enemyWaveCount;
     [SerializeField] Text enemyCount;
+    [SerializeField] Text enemyCount1;
+    [SerializeField] Text enemyCount2;
+    [SerializeField] int numOfEnemies = 100;
+    int count;
 
-    // Use this for initialization
     void Start()
     {
+        count = numOfEnemies;
         StartCoroutine(RepeatedlySpawnEnemies());
+        enemyCount.text = "Enemies remaining: " + count.ToString();
+        enemyCount1.text = "Enemies remaining: " + count.ToString();
+        enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
 
     IEnumerator RepeatedlySpawnEnemies()
     {
-        while (true) // forever
+
+        for(int i = 0; i<numOfEnemies;i++)
         {
+            decreaseCounter();
             GetComponent<AudioSource>().PlayOneShot(spawnedEnemySFX);
             var newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
         }
+    }
+    private void decreaseCounter()
+    {
+        count--;
+        enemyCount.text = "Enemies remaining: " + count.ToString();
+        enemyCount1.text = "Enemies remaining: " + count.ToString();
+        enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
 }
