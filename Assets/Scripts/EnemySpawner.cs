@@ -17,11 +17,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Text enemyCount1;
     [SerializeField] Text enemyCount2;
     [SerializeField] int numOfEnemies = 100;
+    [SerializeField] Canvas winCanvas;
     int count;
 
     void Start()
     {
+        winCanvas.enabled = false;
         count = numOfEnemies;
+
         StartCoroutine(RepeatedlySpawnEnemies());
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
@@ -46,5 +49,14 @@ public class EnemySpawner : MonoBehaviour
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
+        if(count == 0)
+        {
+            winScreen();
+        }
+        else { return; }
+    }
+    private void winScreen()
+    {
+        winCanvas.enabled = true;
     }
 }
