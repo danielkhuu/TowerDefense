@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
         enemyCount2.text = "Enemies remaining: " + count.ToString();
         if(count == 0)
         {
-            winScreen();
+            Invoke("winScreen",15f);
         }
         else { return; }
     }
