@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Text enemyCount;
     [SerializeField] Text enemyCount1;
     [SerializeField] Text enemyCount2;
-    [SerializeField] int numOfEnemies = 100;
+    [SerializeField] int numOfEnemies = 5;
     [SerializeField] Canvas winCanvas;
     int count;
     bool looping = true;
@@ -26,25 +26,28 @@ public class EnemySpawner : MonoBehaviour
         winCanvas.enabled = false;
         count = numOfEnemies;
 
-        
+
         StartCoroutine(RepeatedlySpawnEnemies());
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
-    
+
+    void Update(){
+        checkCounter();
+    }
 
     IEnumerator RepeatedlySpawnEnemies()
     {
-
-        for(int i = 0; i<numOfEnemies;i++)
-        {
+        do{
             decreaseCounter();
             GetComponent<AudioSource>().PlayOneShot(spawnedEnemySFX);
             var newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
         }
+        while(looping);
+
     }
     private void decreaseCounter()
     {
@@ -52,14 +55,17 @@ public class EnemySpawner : MonoBehaviour
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
-        if(count == 0)
+    }
+    private void checkCounter(){
+        if(count <= 0)
         {
-            Invoke("winScreen",15f);
+            Invoke("intermissionScreen",1f);
         }
         else { return; }
     }
-    private void winScreen()
+    void intermissionScreen()
     {
-        winCanvas.enabled = true;
+        print("Intermission");
+        looping = false;
     }
 }
