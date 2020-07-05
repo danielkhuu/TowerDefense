@@ -19,17 +19,20 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] int numOfEnemies = 100;
     [SerializeField] Canvas winCanvas;
     int count;
+    bool looping = true;
 
     void Start()
     {
         winCanvas.enabled = false;
         count = numOfEnemies;
 
+        
         StartCoroutine(RepeatedlySpawnEnemies());
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
+    
 
     IEnumerator RepeatedlySpawnEnemies()
     {
