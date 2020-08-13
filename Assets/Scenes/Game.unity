@@ -6716,7 +6716,7 @@ MonoBehaviour:
   enemyCount: {fileID: 531321136}
   enemyCount1: {fileID: 1218662106}
   enemyCount2: {fileID: 369778542}
-  numOfEnemies: 100
+  numOfEnemies: 5
   winCanvas: {fileID: 1365290935}
 --- !u!82 &1037591829
 AudioSource:

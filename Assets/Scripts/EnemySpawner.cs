@@ -13,24 +13,24 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] AudioClip spawnedEnemySFX;
 
     int enemyWaveCount;
-    [SerializeField] Text enemyCount;
+    [SerializeField] Text enemyCount; //3 color font
     [SerializeField] Text enemyCount1;
     [SerializeField] Text enemyCount2;
-    [SerializeField] int numOfEnemies = 5;
+
+    [SerializeField] int numOfEnemies = 5; //user defined num of enemies
     [SerializeField] Canvas winCanvas;
-    int count;
+    int count = 1;                               //count of enemies
     bool looping = true;
 
     void Start()
     {
         winCanvas.enabled = false;
         count = numOfEnemies;
-
-
         StartCoroutine(RepeatedlySpawnEnemies());
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
+        
     }
 
     void Update(){
@@ -45,27 +45,38 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
-        }
-        while(looping);
+            StartCoroutine(RepeatedlySpawnEnemies());
+        }while(looping);
 
     }
+//todo maybe just make a method to call and spawn. do the spawning with an if state elsewhere
     private void decreaseCounter()
     {
+        print(count);
         count--;
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
+
     private void checkCounter(){
         if(count <= 0)
         {
-            Invoke("intermissionScreen",1f);
+            looping = false;
         }
         else { return; }
     }
-    void intermissionScreen()
+    private void intermissionScreen()
     {
         print("Intermission");
         looping = false;
+        Invoke("restartWave",5f);
     }
+    void restartWave(){
+        print("wave restarted");
+        looping = true;
+        count = numOfEnemies;
+        Invoke("spawnAgain",3f);
+    }
+
 }
