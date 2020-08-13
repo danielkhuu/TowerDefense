@@ -10,6 +10,7 @@ public class Tower : MonoBehaviour
     [SerializeField] ParticleSystem projectileParticle;
 
     public Waypoint baseWaypoint; // what the tower is standing on
+    [SerializeField] int enemyCount;
 
     // State of each tower
     Transform targetEnemy;
@@ -27,6 +28,7 @@ public class Tower : MonoBehaviour
         {
             Shoot(false);
         }
+    
     }
 
     private void SetTargetEnemy()
@@ -75,4 +77,5 @@ public class Tower : MonoBehaviour
         var emissionModule = projectileParticle.emission;
         emissionModule.enabled = isActive;
     }
+
 }

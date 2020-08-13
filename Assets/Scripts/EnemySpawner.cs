@@ -21,20 +21,21 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Canvas winCanvas;
     int count = 1;                               //count of enemies
     bool looping = true;
+    int deathCount = 0;
 
     void Start()
     {
         winCanvas.enabled = false;
         count = numOfEnemies;
         StartCoroutine(RepeatedlySpawnEnemies());
-        enemyCount.text = "Enemies remaining: " + count.ToString();
-        enemyCount1.text = "Enemies remaining: " + count.ToString();
-        enemyCount2.text = "Enemies remaining: " + count.ToString();
         
     }
 
     void Update(){
         checkCounter();
+        if(deathCount >= numOfEnemies){
+            WinScreen();
+        }
     }
 
     IEnumerator RepeatedlySpawnEnemies()
@@ -45,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
-            StartCoroutine(RepeatedlySpawnEnemies());
+         //   StartCoroutine(RepeatedlySpawnEnemies());
         }while(looping);
 
     }
@@ -66,6 +67,10 @@ public class EnemySpawner : MonoBehaviour
         }
         else { return; }
     }
+    public void increaseDeathCount(){
+        deathCount++;
+        print("AHHHHHH");
+    }
     private void intermissionScreen()
     {
         print("Intermission");
@@ -77,6 +82,10 @@ public class EnemySpawner : MonoBehaviour
         looping = true;
         count = numOfEnemies;
         Invoke("spawnAgain",3f);
+    }
+    void WinScreen(){
+        winCanvas.enabled = true;
+        Time.timeScale = 0;
     }
 
 }
