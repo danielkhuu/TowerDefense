@@ -17,25 +17,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Text enemyCount1;
     [SerializeField] Text enemyCount2;
 
-    [SerializeField] int numOfEnemies = 5; //user defined num of enemies
-    [SerializeField] Canvas winCanvas;
-    int count = 1;                               //count of enemies
+    int count = 0;                               //count of enemies
     bool looping = true;
-    int deathCount = 0;
 
     void Start()
     {
-        winCanvas.enabled = false;
-        count = numOfEnemies;
         StartCoroutine(RepeatedlySpawnEnemies());
-        
-    }
-
-    void Update(){
-        checkCounter();
-        if(deathCount >= numOfEnemies){
-            WinScreen();
-        }
     }
 
     IEnumerator RepeatedlySpawnEnemies()
@@ -46,11 +33,10 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
-         //   StartCoroutine(RepeatedlySpawnEnemies());
+         
         }while(looping);
 
     }
-//todo maybe just make a method to call and spawn. do the spawning with an if state elsewhere
     private void decreaseCounter()
     {
         print(count);
@@ -60,32 +46,7 @@ public class EnemySpawner : MonoBehaviour
         enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
 
-    private void checkCounter(){
-        if(count <= 0)
-        {
-            looping = false;
-        }
-        else { return; }
+    public void setEnemyCount(int num){
+        count = num;
     }
-    public void increaseDeathCount(){
-        deathCount++;
-        print("AHHHHHH");
-    }
-    private void intermissionScreen()
-    {
-        print("Intermission");
-        looping = false;
-        Invoke("restartWave",5f);
-    }
-    void restartWave(){
-        print("wave restarted");
-        looping = true;
-        count = numOfEnemies;
-        Invoke("spawnAgain",3f);
-    }
-    void WinScreen(){
-        winCanvas.enabled = true;
-        Time.timeScale = 0;
-    }
-
 }

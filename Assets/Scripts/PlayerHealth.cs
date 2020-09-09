@@ -12,10 +12,11 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Text healthText2;
     [SerializeField] AudioClip playerDamageSFX;
     [SerializeField] Canvas gameOverCanvas;
-
+    [SerializeField] Canvas winScreenCanvas;
 
     void Start()
     {
+        winScreenCanvas.enabled = false;
         gameOverCanvas.enabled = false;
         healthText.text = "BASE HP: " + health.ToString();
         healthText1.text = "BASE HP: " + health.ToString();

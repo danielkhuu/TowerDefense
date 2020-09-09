@@ -9,14 +9,12 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField] ParticleSystem deathParticlePrefab;
     [SerializeField] AudioClip enemyHitSFX;
     [SerializeField] AudioClip enemyDeathSFX;
-    EnemySpawner blah;
     
     AudioSource myAudioSource;
 
     void Start()
     {
         myAudioSource = GetComponent<AudioSource>();
-        blah = FindObjectOfType<EnemySpawner>();
     }
 
     private void OnParticleCollision(GameObject other)
@@ -45,7 +43,5 @@ public class EnemyDamage : MonoBehaviour
                                                                         //it will not get destroyed when the bottom line is called
                                                            //it plays audio in 3d space, place audio by camera, adjust volume
         Destroy(gameObject); //destroy enemy ship
-        print("AHH");
-        blah.increaseDeathCount();
     }
 }
