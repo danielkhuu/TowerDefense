@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     [Range(0.1f, 120f)]
     [SerializeField] float secondsBetweenSpawns = 2f;
     [SerializeField] EnemyMovement enemyPrefab;
@@ -17,19 +16,20 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Text enemyCount1;
     [SerializeField] Text enemyCount2;
 
-    int count = 0;                               //count of enemies
+    int count = 10;                               //count of enemies
     bool looping = true;
 
     void Start()
     {
+
         StartCoroutine(RepeatedlySpawnEnemies());
     }
 
     IEnumerator RepeatedlySpawnEnemies()
     {
         do{
-            decreaseCounter();
-            GetComponent<AudioSource>().PlayOneShot(spawnedEnemySFX);
+            decreaseCounter(); //decrease enemy count on screen
+            GetComponent<AudioSource>().PlayOneShot(spawnedEnemySFX); //spawning sound FX
             var newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
@@ -46,7 +46,8 @@ public class EnemySpawner : MonoBehaviour
         enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
 
-    public void setEnemyCount(int num){
-        count = num;
-    }
 }
+//enemy spawner should only be doing one thing. 
+//perhaps write a script that receives messages from both player health and enemy spawner
+//if player health reaches 0, broadcast to script to end game
+//same idea with enemy spawner
