@@ -4657,6 +4657,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 729236664}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &700569419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 700569421}
+  - component: {fileID: 700569420}
+  m_Layer: 0
+  m_Name: WaveHandlerObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &700569420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700569419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c2f19bdf1544a4f9edc5382588b841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverCanvas: {fileID: 1504779228}
+  winScreenCanvas: {fileID: 1365290935}
+  enemySpawnCount: 5
+  enemyDeathCount: 0
+--- !u!4 &700569421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700569419}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 52.749805, y: 36.9253, z: -67.14638}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &704258936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4135240793724244, guid: 700ff3467e6f35c4d9307b685e8746d1,
@@ -6698,6 +6745,8 @@ MonoBehaviour:
   enemyCount: {fileID: 531321136}
   enemyCount1: {fileID: 1218662106}
   enemyCount2: {fileID: 369778542}
+  spawnLooping: 1
+  enemiesSpawned: 0
 --- !u!82 &1037591829
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9706,8 +9755,6 @@ MonoBehaviour:
   healthText1: {fileID: 1947867555}
   healthText2: {fileID: 1711155677}
   playerDamageSFX: {fileID: 8300000, guid: 1a5558037f4e65d4da7448ad45f03358, type: 3}
-  gameOverCanvas: {fileID: 1504779228}
-  winScreenCanvas: {fileID: 1365290935}
 --- !u!82 &1372987640
 AudioSource:
   m_ObjectHideFlags: 0

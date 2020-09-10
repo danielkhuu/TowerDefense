@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
@@ -9,9 +10,14 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField] ParticleSystem deathParticlePrefab;
     [SerializeField] AudioClip enemyHitSFX;
     [SerializeField] AudioClip enemyDeathSFX;
-    
+
+    private WaveHandler waveHandler; //for updating enemyDeathCount in WaveHandler
     AudioSource myAudioSource;
 
+    void Awake()
+    {
+        waveHandler = GameObject.FindObjectOfType<WaveHandler>();
+    }
     void Start()
     {
         myAudioSource = GetComponent<AudioSource>();
@@ -43,5 +49,7 @@ public class EnemyDamage : MonoBehaviour
                                                                         //it will not get destroyed when the bottom line is called
                                                            //it plays audio in 3d space, place audio by camera, adjust volume
         Destroy(gameObject); //destroy enemy ship
+        waveHandler.enemyDeathCount+=1; //modify waveHandler 
+        
     }
 }

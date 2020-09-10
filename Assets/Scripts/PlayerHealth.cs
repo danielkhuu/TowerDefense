@@ -11,13 +11,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Text healthText1;
     [SerializeField] Text healthText2;
     [SerializeField] AudioClip playerDamageSFX;
-    [SerializeField] Canvas gameOverCanvas;
-    [SerializeField] Canvas winScreenCanvas;
-
+    bool playerDead = false;
     void Start()
     {
-        winScreenCanvas.enabled = false;
-        gameOverCanvas.enabled = false;
         healthText.text = "BASE HP: " + health.ToString();
         healthText1.text = "BASE HP: " + health.ToString();
         healthText2.text = "BASE HP: " + health.ToString();
@@ -35,9 +31,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if(health <= 0)
         {
-            gameOverCanvas.enabled = true;
-            Time.timeScale = 0;
+            playerDead = true;  //read by WaveHandler
         }
-
     }
 }

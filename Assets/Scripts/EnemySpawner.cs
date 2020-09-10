@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,17 +13,23 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Transform enemyParentTransform;
     [SerializeField] AudioClip spawnedEnemySFX;
 
-    int enemyWaveCount;
     [SerializeField] Text enemyCount; //3 color font
     [SerializeField] Text enemyCount1;
     [SerializeField] Text enemyCount2;
 
-    int count = 10;                               //count of enemies
-    bool looping = true;
+    public bool spawnLooping = true; //modified by WaveHandler
+    private int count = 0; //for enemy count text 
+    public int enemiesSpawned = 0; //read by WaveHandler
+    private WaveHandler waveHandler; //for grabbing and copying enemySpawnCount
+    
+    void Awake()
+    {
+        waveHandler = GameObject.FindObjectOfType<WaveHandler>();
+    }
 
     void Start()
     {
-
+        count = waveHandler.enemySpawnCount;
         StartCoroutine(RepeatedlySpawnEnemies());
     }
 
@@ -34,20 +42,15 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.transform.parent = enemyParentTransform;
             yield return new WaitForSeconds(secondsBetweenSpawns);
          
-        }while(looping);
+        }while(spawnLooping);
 
     }
     private void decreaseCounter()
     {
-        print(count);
-        count--;
+        count-=1;
+        enemiesSpawned += 1;
         enemyCount.text = "Enemies remaining: " + count.ToString();
         enemyCount1.text = "Enemies remaining: " + count.ToString();
         enemyCount2.text = "Enemies remaining: " + count.ToString();
     }
-
 }
-//enemy spawner should only be doing one thing. 
-//perhaps write a script that receives messages from both player health and enemy spawner
-//if player health reaches 0, broadcast to script to end game
-//same idea with enemy spawner
